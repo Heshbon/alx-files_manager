@@ -1,5 +1,5 @@
 /**
- * Sets the application's routes
+ * Defines the routes for the application
  */
 
 import { Router } from 'express';
@@ -14,9 +14,9 @@ const router = Router();
  * Route to check the application status
  * @name GET /status
  * @param {Object} req - Express request object.
- * @param {Object} res - EXpress request object.
+ * @param {Object} res - Express response object.
  */
-router.get('/status', async (req, res) => AppController.getStatus(req, res));
+router.get('/status', AppController.getStatus);
 
 /**
  * Endpoint to obtain statistics about the application
@@ -24,31 +24,38 @@ router.get('/status', async (req, res) => AppController.getStatus(req, res));
  * @param {Object} req - Express request object.
  * @param {Object} res - Express request object.
  */
-router.get('/stats', async (req, res) => AppController.getStats(req, res));
+router.get('/stats', AppController.getStats);
 
 /**
  * Endpoint to register a new user.
  * @name POST /users
  * @param {Object} req - Express request object.
- * @param {Object} res - Express request object.
+ * @param {Object} res - Express response object.
  */
-router.post('/users', async (req, res) => UsersController.postNew(req, res));
+router.post('/users', async (req, res) => {
+  try {
+    await UsersController.postNew(req, res);
+  } catch (error) {
+    console.error('Error in POST /users:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 /**
  * Endpoint to initiate user connection.
  * @name GET /connect
  * @param {Object} req - Express request object.
- * @param {Object} res - EXpress response object.
+ * @param {Object} res - Express response object.
  */
-router.get('/connect', async (req, res) => AuthController.getConnect(req, res));
+router.get('/connect', AuthController.getConnect);
 
 /**
  * Endpoint to terminate user connection.
  * @name GET /disconnect
  * @param {Object} req - Express request object.
- * @param {Object} res - Expres response object.
+ * @param {Object} res - Express response object.
  */
-router.get('/disconnect', async (req, res) => AuthController.getDisconnect(req, res));
+router.get('/disconnect', AuthController.getDisconnect);
 
 /**
  * Endpoint to fetch the details of the authenticated user.
@@ -56,7 +63,14 @@ router.get('/disconnect', async (req, res) => AuthController.getDisconnect(req, 
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
-router.get('/users/me', async (req, res) => UsersController.getMe(req, res));
+router.get('/users/me', async (req, res) => {
+  try {
+    await UsersController.getMe(req, res);
+  } catch (error) {
+    console.error('Error in GET /users/me:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 /**
  * Endpoint to upload a file.
@@ -64,7 +78,7 @@ router.get('/users/me', async (req, res) => UsersController.getMe(req, res));
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
-router.post('/files', async (req, res) => FilesController.postUpload(req, res));
+router.post('/files', FilesController.postUpload);
 
 /**
  * Endpoint to retrieve a file document by its ID.
@@ -72,7 +86,7 @@ router.post('/files', async (req, res) => FilesController.postUpload(req, res));
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
-router.get('/files/:id', async (req, res) => FilesController.getShow(req, res));
+router.get('/files/:id', FilesController.getShow);
 
 /**
  * Endpoint to list all file documents for a user.
@@ -80,6 +94,6 @@ router.get('/files/:id', async (req, res) => FilesController.getShow(req, res));
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
-router.get('/files', async (req, res) => FilesController.getIndex(req, res));
+router.get('/files', FilesController.getIndex);
 
 export default router;
