@@ -1,5 +1,5 @@
 /**
- * Sets the application's routes
+ * Defines the routes for the application
  */
 
 import { Router } from 'express';
@@ -11,74 +11,74 @@ import FilesController from '../controllers/FilesController';
 const router = Router();
 
 /**
- * Route to check the application status
+ * Route to get the status of the application.
  * @name GET /status
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/status', async (req, res) => AppController.getStatus(req, res));
 
 /**
- * Endpoint to obtain statistics about the application
+ * Route to get the statistics of the application.
  * @name GET /stats
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/stats', async (req, res) => AppController.getStats(req, res));
 
 /**
- * Endpoint to register a new user.
+ * Route to post new user.
  * @name POST /users
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.post('/users', async (req, res) => UsersController.postNew(req, res));
 
 /**
- * Endpoint to initiate user connection.
+ * Route to connect a user.
  * @name GET /connect
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/connect', async (req, res) => AuthController.getConnect(req, res));
 
 /**
- * Endpoint to terminate user connection.
+ * Route to disconnect a user.
  * @name GET /disconnect
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/disconnect', async (req, res) => AuthController.getDisconnect(req, res));
 
 /**
- * Endpoint to fetch the details of the authenticated user.
+ * Route to get the authenticated user's information.
  * @name GET /users/me
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/users/me', async (req, res) => UsersController.getMe(req, res));
 
 /**
- * Endpoint to upload a file.
+ * Route to upload a file.
  * @name POST /files
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.post('/files', async (req, res) => FilesController.postUpload(req, res));
 
 /**
- * Endpoint to retrieve a file document by its ID.
+ * Route to retrieve a file document based on the ID.
  * @name GET /files/:id
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/files/:id', async (req, res) => FilesController.getShow(req, res));
 
 /**
- * Endpoint to list all file documents for a user.
+ * Route to retrieve all users file documents for a specific parentId and with pagination.
  * @name GET /files
- * @param {Object} req - Request object.
- * @param {Object} res - Response object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
  */
 router.get('/files', async (req, res) => FilesController.getIndex(req, res));
 
