@@ -8,8 +8,8 @@ import { dbClient, ObjectId } from '../utils/db';
 class UsersController {
   /**
    * Registers a new user.
-   * @param {Object} req - Request object.
-   * @param {Object} res - Response object.
+   * @param {Object} req - Express request object.
+   * @param {Object} res - Express response object.
    */
   static async postNew(req, res) {
     const { email, password } = req.body;
@@ -35,8 +35,8 @@ class UsersController {
 
   /**
    * Retrieves information for the authenticated user.
-   * @param {Object} req - Request object.
-   * @param {Object} res - Response object.
+   * @param {Object} req - Expres request object.
+   * @param {Object} res - Express response object.
    */
   static async getMe(req, res) {
     const token = req.headers['x-token'];
